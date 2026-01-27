@@ -1,29 +1,62 @@
 package model;
+
 import java.util.*;
 
 public class Game {
 
     private Board board;
     private Player currentPlayer;
-    private List<Player> players;
+    private final Player player1;
+    private final Player player2;
 
-    public Game(Board board, Player currentPlayer, List<Player>){
-        this.board = board;
-        this.currentPlayer = currentPlayer;
-        this.players = players;
+    public Game(int boardSize, Player p1, Player p2) {
+        this.board = new Board(boardSize);
+        this.player1 = p1;
+        this.player2 = p2;
+        this.currentPlayer = p1;
     }
 
-    public Player getCurrentPlayer();
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
 
-    public Player resetPlayer();
+    public void resetPlayer(Color color) {
+        if (color == null) {
+            currentPlayer = player1;
+        }
+        if (!player1.getColor().equals(color)) {
+            switchPlayer();
+        }
 
-    public boolean isOver();
+    }
 
-    public Player nextPlayer();
+    public boolean isOver() {
+        return getWinner() != null;
+    }
 
-    public boolean isValid();
+    public void switchPlayer() {// nextPlayer()
+        currentPlayer = (currentPlayer == player1) ? player2 : player1;
+    }
 
-    public Player getWinner();
+    public boolean isValid() {
+        return true;
 
-    public Board getBoard();
+    }
+
+    // public Player getWinner() { // a remplacer par la classe unionfind
+    //     int winnerColor = board.checkWinner(); // Renvoie 0, 1 ou 2
+    //     if (winnerColor == Board.BLUE)
+    //         return player1;
+    //     if (winnerColor == Board.RED)
+    //         return player2;
+    //     return null; // Pas encore de gagnant
+    // }
+
+    public Player getWinner() {
+        return null;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
 }
