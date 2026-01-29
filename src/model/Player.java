@@ -5,7 +5,7 @@ package model;
 /**
  * Classe abstraite représentant un joueur dans un jeu de Hex.
  */
-public abstract class Player {
+public class Player{
     /**
      * Nom du joueur.
      */
@@ -61,11 +61,19 @@ public abstract class Player {
         this.color = color;
     } 
 
+    public MoveStrategy getStrategy() {
+        return this.strategy;
+    }
+
+    public void setStrategy(MoveStrategy strategy) {
+        this.strategy = strategy;
+    }
+
     /**
      * Méthode pour jouer un coup.
-     * @param game
+     * @param board Le plateau de jeu.
      */
-    public void play(Game game) {
-        strategy.chooseMove(game);
+    public int[] decideMove(Board board) {
+        return this.strategy.chooseMove(board);
     }
 }
