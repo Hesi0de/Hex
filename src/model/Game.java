@@ -44,12 +44,24 @@ public class Game {
     }
 
     // public Player getWinner() { // a remplacer par la classe unionfind
-    //     int winnerColor = board.checkWinner(); // Renvoie 0, 1 ou 2
-    //     if (winnerColor == Board.BLUE)
-    //         return player1;
-    //     if (winnerColor == Board.RED)
-    //         return player2;
-    //     return null; // Pas encore de gagnant
+    // int winnerColor = board.checkWinner(); // Renvoie 0, 1 ou 2
+    // if (winnerColor == Board.BLUE)
+    // return player1;
+    // if (winnerColor == Board.RED)
+    // return player2;
+    // return null; // Pas encore de gagnant
+    // }
+    
+    // public int checkWinner() {
+    // // Est-ce que Bleu a relié Gauche et Droite ?
+    // if (uf.isConnected(uf.getVirtualLeft(), uf.getVirtualRight())) {
+    // return 1;
+    // }
+    // // Est-ce que Rouge a relié Haut et Bas ?
+    // if (uf.isConnected(uf.getVirtualTop(), uf.getVirtualBottom())) {
+    // return 2;
+    // }
+    // return 0; // Personne n'a gagné
     // }
 
     public Player getWinner() {

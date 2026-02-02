@@ -9,5 +9,5 @@ public interface MoveStrategy {
      * Méthode pour choisir un coup.
      * @return Un tableau de deux entiers représentant les coordonnées du coup choisi.
      */
-    int[] chooseMove(Game game);
+    int[] chooseMove(Board board);
 }
