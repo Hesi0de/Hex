@@ -1,5 +1,7 @@
 
-package model;
+package view;
+import model.*;
+
 
 public class GameLauncher {
     public static void main(String[] args) {
@@ -13,9 +15,9 @@ public class GameLauncher {
          * board.setCell(1, 1, Color.Colors.EMPTY);
          * board.setCell(7, 7, Color.Colors.BLUE);
          */
-        MoveStrategy RandomAIPlayer = new RandomAIPlayer();
-        Player p1 = new Player("Blue Ai", Color.BLUE, RandomAIPlayer);
-        Player p2 = new Player("Red Ai", Color.RED, RandomAIPlayer);
+        MoveStrategy RandomAIStrategy = new RandomAIStrategy();
+        Player p1 = new Player("Blue Ai", Color.BLUE, RandomAIStrategy);
+        Player p2 = new Player("Red Ai", Color.RED, RandomAIStrategy);
         // public static final String ANSI_RESET = "";
         // public static final String ANSI_GREEN = "";
         Player currentPlayer = p1;

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Classe représentant un joueur IA qui choisit des coups aléatoires.
  */
-public class RandomAIPlayer implements MoveStrategy {
+public class RandomAIStrategy implements MoveStrategy {
     /**
      * Constructeur de la classe RandomAIPlayer.
      * 

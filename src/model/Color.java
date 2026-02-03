@@ -13,7 +13,7 @@ public enum Color {
      * 
      * @return de l'opposant
      */
-    public Color opponnetColor() {
+    public Color opponentColor() {
         switch (this) {
             case RED:
                 return BLUE;
