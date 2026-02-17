@@ -30,9 +30,9 @@ public class Game {
 
     }
 
-    public boolean isOver() {
+    /*public boolean isOver() {
         return getWinner() != null;
-    }
+    }*/
 
     public void switchPlayer() {// nextPlayer()
         currentPlayer = (currentPlayer == player1) ? player2 : player1;
@@ -64,9 +64,17 @@ public class Game {
     // return 0; // Personne n'a gagné
     // }
 
-    public Player getWinner() {
+    /*public Player getWinner() {
+        Color winnerColor = board.getWinner(); 
+        if (winnerColor == Board.BLUE){
+            return player1;
+        }
+        else if(winnerColor == Board.RED){
+            return player2;
+        }
         return null;
-    }
+         
+    }*/
 
     public Board getBoard() {
         return board;

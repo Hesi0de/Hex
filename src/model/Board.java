@@ -1,13 +1,25 @@
 package model;
 import java.util.*;
+import model.pathfinders.PathFinder;
+import model.pathfinders.PathFinderUF;
+import model.pathfinders.PathFinderDFS;
+
+import utils.*;
 public class Board {
     protected int size;
-
+    private static final String RESET = "\u001B[0m";
+    private static final String RED = "\u001B[31m";
+    private static final String BLUE = "\u001B[34m";
+    private PathFinder pf ;
     protected Color cells[][];
+
+    private List<int[]> winningPath = null;
 
     public Board(int size) {
         this.size = size;
         this.cells = new Color[size][size];
+        this.pf = new PathFinderUF(this);
+
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 this.cells[i][j] = Color.EMPTY;
@@ -137,11 +149,21 @@ public class Board {
     }
 
 
-    // Vérifie si une couleur a un chemin gagnant sur la grille
+    //on vérifie si une couleur a un chemin gagnant sur la grille
     public boolean hasPath(Color color){
+        return pf.hasWinningPath(this,color);
 
-        return true ;
+    }
 
+    public void computeWinningPath() {
+        PathFinderDFS pfDFS = new PathFinderDFS();
+        // teste le Bleu
+        winningPath = pfDFS.findWinningPath(this, Color.BLUE);
+        if (winningPath != null){
+            return;
+        }
+        //sinon le Rouge
+        winningPath = pfDFS.findWinningPath(this, Color.RED);
     }
 
     public Color getWinner(){
@@ -157,13 +179,18 @@ public class Board {
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("  ");
+        sb.append("   ");
         for(int col = 0; col < this.size; col++){
-            if(col < 10) sb.append(" "); // Alignement pour les colonnes à un chiffre
-            sb.append(col).append(" ");// Affichage des numéros
+            sb.append(col).append(" ");
         }
         sb.append("\n");
         
+        sb.append("    ");
+        for(int col = 0; col < this.size; col++){
+            sb.append(RED).append("_ ").append(RESET);
+        }
+        sb.append("\n\n");
+
         for(int row = 0; row < this.size; row++){
             if(row < 10) sb.append(" "); 
             sb.append(row).append(" ");
@@ -172,12 +199,45 @@ public class Board {
             for(int indent = 0; indent < row; indent++){
                 sb.append(" ");
             }
+            sb.append(BLUE).append("\\ ").append(RESET);
 
-            for(int col = 0; col < this.size; col++){
-                sb.append(cells[row][col].toSymbol()).append("  ");
+           for (int col = 0; col < this.size; col++) {
+                boolean inPath = false;
+                String pathColor = ""; // couleur pour le chemin
+
+                if (winningPath != null) {
+                    for (int[] cell : winningPath) {
+                        if (cell[0] == row && cell[1] == col) {
+                            inPath = true;
+                            break;
+                        }
+                    }
+
+                    if (inPath) {
+                        Color winnerColor = getCell(winningPath.get(0)[0], winningPath.get(0)[1]);
+                        if (winnerColor == Color.BLUE) {
+                            pathColor = "\u001B[96m"; // bleu clair
+                        }
+                        else if (winnerColor == Color.RED){
+                            pathColor = "\u001B[91m"; // rouge clair
+                        }
+                    }
+                }
+
+                if (inPath) {
+                    sb.append(pathColor).append("⬢").append("\u001B[0m").append(" ");
+                } else {
+                    sb.append(cells[row][col].toSymbol()).append(" ");
+                }
             }
+            sb.append(BLUE).append("\\ ").append(RESET);
             sb.append("\n");
         }
+        sb.append(" ".repeat(size+5));
+        for(int col = 0; col < this.size; col++){
+            sb.append(RED).append("_ ").append(RESET);
+        }
+        sb.append("\n");
         return sb.toString();
     }
 

@@ -1,0 +1,34 @@
+<project name="jeuHex" default="compile" basedir=".">
+<property name="src" value="src/"/>
+<property name="build" value="build/"/>
+<property name="projet.lib.dir" value="lib/"/>
+<path id="projet.classpath">
+<fileset dir="${projet.lib.dir}">
+<include name="*.jar"/>
+</fileset>
+<pathelement location="${build}"/>
+</path>
+<target name="init">
+<mkdir dir="${build}"/>
+</target>
+<target name="compile" depends="init" description="Compilation des classes">
+<javac srcdir="${src}" destdir="${build}" debug="off" optimize="off" deprecation="on">
+<classpath refid="projet.classpath"/>
+</javac>
+	</target>
+		<target name="run" description="execution">
+		<java classname="view.GameLauncher" fork="true">
+			<classpath refid="projet.classpath"/>
+		</java>
+	</target>
+	
+	
+     <target name="clean" description="Delete old build and dist directories">
+        <delete dir="${build}"/>
+
+
+    </target>
+
+
+
+</project>

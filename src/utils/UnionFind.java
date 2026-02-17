@@ -1,4 +1,4 @@
-package model;
+package utils;
 
 public class UnionFind {
     private int[] parent;
