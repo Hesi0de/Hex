@@ -2,6 +2,7 @@ package model.pathfinders;
 
 import model.Board;
 import model.Color;
+import utils.DFS;
 
 import java.util.List;
 

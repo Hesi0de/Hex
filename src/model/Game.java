@@ -30,6 +30,17 @@ public class Game {
 
     }
 
+    /**
+     * echange les rôles des joueurs (le joueur 1 devient le joueur 2 et vice versa).
+     * cette méthode doit être appelée lorsque le joueur 2 décide de faire un swap après son premier coup.
+     */
+    public void swapPlayers() {
+        Color tmp = player1.getColor();
+        player1.setColor(player2.getColor());
+        player2.setColor(tmp);
+    }
+
+
     /*public boolean isOver() {
         return getWinner() != null;
     }*/

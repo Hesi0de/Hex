@@ -38,4 +38,18 @@ public class RandomAIStrategy implements MoveStrategy {
         // return chooseMove(board);
         // }
     }
+
+    @Override
+    public boolean decideSwap(Board board, int[] firstMove) {
+        // plusiers stratégies possibles pour décider de faire un swap ou pas, ici on choisit aléatoirement
+        return Math.random() < 0.5; // 50% de chances de faire un swap
+        
+        // return true ; // oujours faire un swap(si on veut tester rapidenment)
+        
+        // ou stratégie plus intelligente : faire un swap si le coup de l'adversaire est du centre  de la grille et autours
+        // if (firstMove[0] == center || firstMove[0] == center - 1 || firstMove[0] == center + 1 && firstMove[1] == center || firstMove[1] == center - 1 || firstMove[1] == center + 1) {
+            //     return true; // effectuer le swap
+            // }
+            // return false; 
+    }
 }
