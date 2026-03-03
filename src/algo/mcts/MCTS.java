@@ -1,4 +1,5 @@
-package algo;
+package algo.mcts;
+
 import model.Board;
 import model.Color;
 import model.RandomAIStrategy;
@@ -45,7 +46,7 @@ public class MCTS {
     }
 
     /**
-     * phase 1v backpr
+     * phase 1
      * On descend dans l'arbre en choisissant le meilleur enfant , càd UCB1
      * jusquèà trouver un noeud non exploré ou terminal
      */
@@ -133,8 +134,6 @@ public class MCTS {
             currentNode = currentNode.getParent(); //on remonte au parent
         }
     }
-
-
     public int[] bestMove(MCTSNode r){
         MCTSNode best = null;
         int bestVisits = -1;
