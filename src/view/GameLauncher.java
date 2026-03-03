@@ -1,13 +1,14 @@
 
 package view;
+
 import model.*;
 
-
 public class GameLauncher {
-    private static void clearGameConsole(){
+    private static void clearGameConsole() {
         System.out.println("\033[H\033[2J");
         System.out.flush();
     }
+
     public static void main(String[] args) {
         System.out.println("Welcome to HexGame");
 
@@ -20,21 +21,26 @@ public class GameLauncher {
          * board.setCell(7, 7, Color.Colors.BLUE);
          */
         MoveStrategy RandomAIStrategy = new RandomAIStrategy();
-        Player p1 = new Player("Blue Ai", Color.BLUE, RandomAIStrategy);
-        Player p2 = new Player("Red Ai", Color.RED, RandomAIStrategy);
+
+        MoveStrategy MctsStratB = new MCTSStrategy(1000, Color.BLUE);
+        MoveStrategy MctsStratR = new MCTSStrategy(1000, Color.RED);
+
+        Player p1 = new Player("Blue Ai", Color.BLUE, MctsStratB);
+        Player p2 = new Player("Red Ai", Color.RED, MctsStratR);
         Player currentPlayer = p1;
 
         Game game = new Game(board.getSize(), p1, p2);
-        int firstMove[] = null; // pour stocker le premier coup joué par le premier joueur, important pour le swap
+        int firstMove[] = null; // pour stocker le premier coup joué par le premier joueur, important pour le
+                                // swap
         boolean swapedHandled = false; // pour s'assurer que le swap est traité une seule fois
 
         while (!board.isBoardFull()) {
             clearGameConsole();
 
-            if(!swapedHandled && currentPlayer == p2 && firstMove != null){
+            if (!swapedHandled && currentPlayer == p2 && firstMove != null) {
                 boolean doSwap = p2.getStrategy().decideSwap(board, firstMove);
 
-                if(doSwap) {
+                if (doSwap) {
                     Color p2AvantSwap = p2.getColor(); // Stocke la couleur de p2 avant le swap pour l'affichage
                     game.swapPlayers();
                     // La cellule déjà posée change de couleur (elle appartient maintenant à p2)
@@ -46,40 +52,40 @@ public class GameLauncher {
 
                     // Après le swap, c'est au joueur 1 de jouer (les rôles ont été échangés)
                     currentPlayer = p1;
-                    
+
                     continue;
                 }
-                swapedHandled = true; // Même si le swap n'est pas effectué, on ne demande plus à p2 après son premier coup
-            
+                swapedHandled = true; // Même si le swap n'est pas effectué, on ne demande plus à p2 après son premier
+                                      // coup
+
             }
 
             // coup normale comme avant
             int move[] = currentPlayer.decideMove(board);
             board.executeMove(move[0], move[1], currentPlayer.getColor());
-            
-            if(firstMove == null){
+
+            if (firstMove == null) {
                 firstMove = move; // Enregistre le premier coup joué pour que p2 puisse décider du swap
             }
             System.out.println(currentPlayer.getName() + " played at (" + move[0] + ", " + move[1] + ")");
-            
+
             board.computeWinningPath();
             System.out.println(board);
-                         
+
             Color winner = board.getWinner();
-            if(winner != Color.EMPTY){
+            if (winner != Color.EMPTY) {
                 System.out.println("le gagnant est " + winner);
                 break;
             }
             currentPlayer = (currentPlayer == p1) ? p2 : p1;
 
-            try{
+            try {
                 Thread.sleep(20);
-            }catch (InterruptedException e){
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
         }
-
 
     }
 }
