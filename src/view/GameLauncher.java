@@ -20,8 +20,11 @@ public class GameLauncher {
          * board.setCell(7, 7, Color.Colors.BLUE);
          */
         MoveStrategy RandomAIStrategy = new RandomAIStrategy();
-        Player p1 = new Player("Blue Ai", Color.BLUE, RandomAIStrategy);
-        Player p2 = new Player("Red Ai", Color.RED, RandomAIStrategy);
+        MoveStrategy mctsStrat1 = new MCTSStrategy(10, Color.BLUE);
+        MoveStrategy mctsStrat2 = new MCTSStrategy(50, Color.RED);
+
+        Player p1 = new Player("Blue MCTS", Color.BLUE, mctsStrat1);
+        Player p2 = new Player("Red MCTS", Color.RED, mctsStrat2);
         Player currentPlayer = p1;
 
         Game game = new Game(board.getSize(), p1, p2);
