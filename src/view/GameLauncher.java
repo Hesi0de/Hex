@@ -22,8 +22,8 @@ public class GameLauncher {
          */
         MoveStrategy RandomAIStrategy = new RandomAIStrategy();
 
-        MoveStrategy MctsStratB = new MCTSStrategy(1000, Color.BLUE);
-        MoveStrategy MctsStratR = new MCTSStrategy(1000, Color.RED);
+        MoveStrategy MctsStratB = new MCTSStrategy(100, Color.BLUE);
+        MoveStrategy MctsStratR = new MCTSStrategy(100, Color.RED);
 
         Player p1 = new Player("Blue Ai", Color.BLUE, MctsStratB);
         Player p2 = new Player("Red Ai", Color.RED, MctsStratR);
