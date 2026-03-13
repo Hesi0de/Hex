@@ -48,7 +48,7 @@ public class RAVE extends MCTS {
         for (int i = 0; i < getBudget(); i++) {
             RAVENode selected = (RAVENode) select(r);
             RAVENode expanded = (RAVENode) expand(selected);
-            Color winner = simulate(expanded); // remplit lastSimMoves/lastSimColors
+            Color winner = simulate(expanded); // remplit lastSimMoves/lastSimColors RENOMMER SIMULATE SINON
             backpropagateRAVE(expanded, winner);             // utilise lastSimMoves/lastSimColors
         }
         return bestMove(r);
@@ -58,21 +58,23 @@ public class RAVE extends MCTS {
     /**
      * Override : sélection basée sur le score RAVE au lieu de UCT pur.
      */
+    // passer child en argument a getrave pour calculer sur les enfants et pas les parents
     @Override
     public MCTSNode getBestChild(MCTSNode node) {
         MCTSNode best = null;
-        double bestScore = Double.MIN_VALUE;
-        // On parcourt tous les enfants pour trouver celui avec le meilleur score RAVE
+        double bestScore = -Double.MAX_VALUE;
+        
         for (MCTSNode child : node.getChildren()) {
-            int[] move = child.getMove(); // coup qui a mené à ce nœud,pour calculer le score RAVE
+            int[] move = child.getMove(); 
             double score;
-            // Si le nœud est un RAVENode et que le coup est défini, on calcule son score RAVE 
+            
             if (node instanceof RAVENode && move != null) {
-                score = ((RAVENode) node).getRAVEScore(move[0], move[1]); 
-            } else { // sinon, on prend le score UCT classique (ex: pour la racine qui n'est pas un RAVENode)
+
+                score = ((RAVENode) node).getRAVEScore(child, move[0], move[1]); 
+            } else { 
                 score = child.getUCTValue();
             }
-            // On cherche le meilleur score
+            
             if (score > bestScore) {
                 bestScore = score;
                 best = child;
@@ -84,6 +86,7 @@ public class RAVE extends MCTS {
         /**
      * Override : crée des RAVENode au lieu de MCTSNode.
      */
+    //suppression ? utilité ?
         @Override
         public MCTSNode expand(MCTSNode node) {
             if (node.isTerminal()) {
@@ -109,8 +112,10 @@ public class RAVE extends MCTS {
      * tous les coups joués dans lastSimMoves et lastSimColors.
      * @param node
      * @return
-     */
-    public Color simulateRAVE(RAVENode node) {
+     */ 
+    //renommmé simulate rave et override pour utiliser la fonction
+    @Override
+    public Color simulate(MCTSNode node) {
         Board stateBoard  = node.getBoard().copy();
         Color currentPlayer = node.getCurrentPlayerColor();
         lastSimMoves.clear();
