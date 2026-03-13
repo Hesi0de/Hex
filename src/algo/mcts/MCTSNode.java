@@ -34,6 +34,10 @@ public class MCTSNode {
         if (visits == 0){
             return Integer.MAX_VALUE; // Noeud jamais visité; Priorité max
         }
+
+        if(parent == null){
+            return wins / visits; // Racine, pas de terme d'exploration
+        }
         double explorationConstant = Math.sqrt(2);
         // C = racine(2) est standard, à ajuster,peut être en param
         double exploitation = wins / visits;

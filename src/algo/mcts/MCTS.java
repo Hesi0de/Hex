@@ -52,13 +52,20 @@ public class MCTS {
      */
     public MCTSNode select(MCTSNode node){
         while(!node.isTerminal() && node.isFullyExpanded()){
-            node = getBestChild(node);
+            MCTSNode next = getBestChild(node);
+            if(next == null || next == node){ //pas d'enfant ou pas de meilleur enfant
+                break;
+            }
+            node = next;
         }
         return node;
 
     }
 
     public MCTSNode getBestChild(MCTSNode node){
+        if(node.getChildren().isEmpty()){
+            return node; //pas d'enfant, on retourne le noeud lui même
+        }
         MCTSNode best = null;
         double bestScore = Double.MIN_VALUE;
 
