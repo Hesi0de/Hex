@@ -2,7 +2,6 @@
 
 set -u
 
-
 MAX_JOBS=2
 GAMES=250
 
@@ -16,7 +15,6 @@ ALGO_RED="rave"
 START_COLOR="BLUE"
 
 # Dossiers de sortie
-
 TMP_DIR="tmp/$RUN_NAME"
 OUT_DIR="csv/$RUN_NAME"
 
@@ -26,7 +24,7 @@ OUT10="$OUT_DIR/results_size10.csv"
 
 RATIOS=("1:1" "1:2" "1:5" "2:1" "5:1")
 
-
+# Budgets
 BUDGETS_5=(10 50 100 500 1000 2000)
 BUDGETS_8=(10 50 100 500 1000 2000)
 BUDGETS_10=(10 50 100 400 800 1600)
@@ -47,7 +45,7 @@ echo "$HEADER" > "$OUT10"
 running_jobs=0
 job_id=0
 
-# Vérification rapide
+# Vérification
 if ! java -cp "$CLASS_PATH" "$MAIN_CLASS" 5 1 1:1 10 10 "$ALGO_RED" "$ALGO_BLUE" "$START_COLOR" >/dev/null 2>&1; then
     echo "Erreur: impossible de lancer $MAIN_CLASS"
     exit 1
@@ -59,25 +57,25 @@ launch_job() {
     local ratio="$2"
     local base="$3"
 
-    local r_red="${ratio%%:*}"
-    local r_blue="${ratio##*:}"
+    local r_blue="${ratio%%:*}"   # Bleu prend la première valeur du ratio
+    local r_red="${ratio##*:}"    # Rouge prend la deuxième valeur du ratio
 
-    local budget_red=$((base * r_red))
     local budget_blue=$((base * r_blue))
+    local budget_red=$((base * r_red))
 
     local outfile
     outfile=$(printf "%s/size%s_job_%03d.csv" "$TMP_DIR" "$size" "$job_id")
 
-    echo "Launch -> duel=$RUN_NAME size=$size ratio=$ratio base=$base starter=$START_COLOR red=$budget_red blue=$budget_blue"
+    echo "Launch -> duel=$RUN_NAME size=$size ratio=$ratio base=$base starter=$START_COLOR blue=$budget_blue red=$budget_red"
 
     java -cp "$CLASS_PATH" "$MAIN_CLASS" \
         "$size" \
         "$GAMES" \
         "$ratio" \
-        "$budget_red" \
         "$budget_blue" \
-        "$ALGO_RED" \
+        "$budget_red" \
         "$ALGO_BLUE" \
+        "$ALGO_RED" \
         "$START_COLOR" \
         > "$outfile" &
 
@@ -88,6 +86,7 @@ launch_job() {
         wait -n
         ((running_jobs--))
     fi
+    
 }
 
 # Lancer toutes les configs d'une taille

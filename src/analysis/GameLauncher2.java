@@ -15,14 +15,14 @@ public class GameLauncher2 {
         int size = Integer.parseInt(args[0]);
         int games = Integer.parseInt(args[1]);
         String ratio = args[2];
-        int budgetRed = Integer.parseInt(args[3]);
-        int budgetBlue = Integer.parseInt(args[4]);
-        String algoRed = args[5];
-        String algoBlue = args[6];
+        int budgetBlue = Integer.parseInt(args[3]);
+        int budgetRed = Integer.parseInt(args[4]);
+        String algoBlue = args[5];
+        String algoRed = args[6];
         String startColor = args[7].toUpperCase();
+        int blueWins = 0;
 
         int redWins = 0;
-        int blueWins = 0;
 
         for (int i = 0; i < games; i++) {
 

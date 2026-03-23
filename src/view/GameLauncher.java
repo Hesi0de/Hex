@@ -12,7 +12,7 @@ public class GameLauncher {
     public static void main(String[] args) {
         System.out.println("Welcome to HexGame");
 
-        Board board = new Board(10);
+        Board board = new Board(11);
         /*
          * board.setCell(0, 0, Color.Colors.RED);
          * board.setCell(0, 1, Color.Colors.BLUE);
@@ -20,10 +20,10 @@ public class GameLauncher {
          * board.setCell(1, 1, Color.Colors.EMPTY);
          * board.setCell(7, 7, Color.Colors.BLUE);
          */
-        MoveStrategy RandomAIStrategy = new RandomAIStrategy();
+        //MoveStrategy RandomAIStrategy = new RandomAIStrategy();
 
-        MoveStrategy MctsStratB = new RandomAIStrategy();
-        MoveStrategy MctsStratR = new RAVEStrategy(20, Color.RED);
+        MoveStrategy MctsStratB = new RAVEStrategy(3500, Color.BLUE);
+        MoveStrategy MctsStratR = new RAVEStrategy(8000, Color.RED);
 
         Player p1 = new Player("Blue Ai", Color.BLUE, MctsStratB);
         Player p2 = new Player("Red Ai", Color.RED, MctsStratR);

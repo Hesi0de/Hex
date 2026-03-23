@@ -14,7 +14,7 @@ ALGO_RED="mcts"
 
 START_COLOR="BLUE"
 
-# Dossiers
+# Dossiers de sortie
 TMP_DIR="tmp/$RUN_NAME"
 OUT_DIR="csv/$RUN_NAME"
 
@@ -57,25 +57,25 @@ launch_job() {
     local ratio="$2"
     local base="$3"
 
-    local r_red="${ratio%%:*}"
-    local r_blue="${ratio##*:}"
+    local r_blue="${ratio%%:*}"   # Bleu prend la première valeur du ratio
+    local r_red="${ratio##*:}"    # Rouge prend la deuxième valeur du ratio
 
-    local budget_red=$((base * r_red))
     local budget_blue=$((base * r_blue))
+    local budget_red=$((base * r_red))
 
     local outfile
     outfile=$(printf "%s/size%s_job_%03d.csv" "$TMP_DIR" "$size" "$job_id")
 
-    echo "Launch -> duel=$RUN_NAME size=$size ratio=$ratio base=$base starter=$START_COLOR red=$budget_red blue=$budget_blue"
+    echo "Launch -> duel=$RUN_NAME size=$size ratio=$ratio base=$base starter=$START_COLOR blue=$budget_blue red=$budget_red"
 
     java -cp "$CLASS_PATH" "$MAIN_CLASS" \
         "$size" \
         "$GAMES" \
         "$ratio" \
-        "$budget_red" \
         "$budget_blue" \
-        "$ALGO_RED" \
+        "$budget_red" \
         "$ALGO_BLUE" \
+        "$ALGO_RED" \
         "$START_COLOR" \
         > "$outfile" &
 
@@ -86,9 +86,10 @@ launch_job() {
         wait -n
         ((running_jobs--))
     fi
+    
 }
 
-# Lancer toutes les configs
+# Lancer toutes les configs d'une taille
 run_size() {
     local size="$1"
     local outfile="$2"
