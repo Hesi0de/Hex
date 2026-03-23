@@ -8,7 +8,7 @@ public class GameLauncher2 {
 
         if (args.length != 8) {
             System.out.println("Usage:");
-            System.out.println("size games ratio budgetRed budgetBlue algoRed algoBlue startColor");
+            System.out.println("size games ratio budgetBlue budgetRed algoBlue algoRed startColor");
             return;
         }
 
