@@ -41,6 +41,22 @@ public class RAVE extends MCTS {
         super(budget);
     }
 
+    public List<int[]> getLastSimMoves() {
+        return lastSimMoves;
+    }
+
+    public List<Color> getLastSimColors() {
+        return lastSimColors;
+    }
+
+    public void setLastSimMoves(List<int[]> lastSimMoves) {
+        this.lastSimMoves = lastSimMoves;
+    }
+
+    public void setLastSimColors(List<Color> lastSimColors) {
+        this.lastSimColors = lastSimColors;
+    }
+
     @Override
     public int[] search(Board board, Color currentPlayer) {
         //créer la racine 

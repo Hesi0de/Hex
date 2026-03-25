@@ -30,6 +30,16 @@ public class Player{
     }
 
     /**
+     * Constructeur de la classe Player sans stratégie. sert pour les tests.
+     * @param name
+     * @param color
+     */
+    public Player(String name, Color color) {
+        this.name = name;
+        this.color = color;
+    }
+
+    /**
      * Getter pour le nom du joueur.
      * @return Le nom du joueur.
      */
