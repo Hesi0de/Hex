@@ -14,7 +14,9 @@ public class Player{
      * Couleur du joueur.
      */
     private Color color;
-
+    /**
+     * Stratégie de déplacement du joueur.
+     */
     private MoveStrategy strategy;
 
     /**
@@ -71,10 +73,18 @@ public class Player{
         this.color = color;
     } 
 
+    /**
+     * Getter pour la stratégie de déplacement du joueur.
+     * @return
+     */
     public MoveStrategy getStrategy() {
         return this.strategy;
     }
 
+    /**
+     * Setter pour la stratégie de déplacement du joueur.
+     * @param strategy
+     */
     public void setStrategy(MoveStrategy strategy) {
         this.strategy = strategy;
     }

@@ -41,22 +41,44 @@ public class RAVE extends MCTS {
         super(budget);
     }
 
+    /**
+     * retourne la liste des coups joués lors de la dernière simulation, nécessaire pour la mise à jour AMAF
+     * @return la liste des coups joués lors de la dernière simulation
+     */
     public List<int[]> getLastSimMoves() {
         return lastSimMoves;
     }
 
+    /**
+     * retourne la liste des couleurs des joueurs lors de la dernière simulation, nécessaire pour la mise à jour AMAF
+     * @return la liste des couleurs des joueurs lors de la dernière simulation
+     */
     public List<Color> getLastSimColors() {
         return lastSimColors;
     }
 
+    /**
+     * setter pour la liste des coups joués lors de la dernière simulation, nécessaire pour la mise à jour AMAF
+     * @param lastSimMoves la liste des coups joués lors de la dernière simulation
+     */
     public void setLastSimMoves(List<int[]> lastSimMoves) {
         this.lastSimMoves = lastSimMoves;
     }
 
+    /**
+     * setter pour la liste des couleurs des joueurs lors de la dernière simulation, nécessaire pour la mise à jour AMAF
+     * @param lastSimColors la liste des couleurs des joueurs lors de la dernière simulation
+     */
     public void setLastSimColors(List<Color> lastSimColors) {
         this.lastSimColors = lastSimColors;
     }
 
+    /**
+     * Override : la fonction de recherche principale reste la même, mais elle utilise des RAVENode et la backpropagation RAVE.
+     * @param board l'état actuel du plateau
+     * @param currentPlayer la couleur du joueur courant
+     * @return le meilleur coup trouvé sous forme d'un tableau [row, col]
+     */
     @Override
     public int[] search(Board board, Color currentPlayer) {
         //créer la racine 
@@ -73,6 +95,9 @@ public class RAVE extends MCTS {
 
     /**
      * Override : sélection basée sur le score RAVE au lieu de UCT pur.
+     * Le score RAVE combine les stats MCTS classiques et les stats AMAF pour chaque enfant, en utilisant une formule de pondération.
+     * @param node le nœud dont on veut trouver le meilleur enfant
+     * @return le meilleur enfant selon le score RAVE
      */
     // passer child en argument a getrave pour calculer sur les enfants et pas les parents
     @Override
@@ -100,8 +125,10 @@ public class RAVE extends MCTS {
     }
 
         /**
-     * Override : crée des RAVENode au lieu de MCTSNode.
-     */
+         * Override : expansion qui crée un RAVENode au lieu d'un MCTSNode, avec les stats AMAF initialisées.
+         * @param node le nœud à partir duquel on veut créer un enfant
+         * @return le nœud enfant créé, ou le nœud lui-même s'il est terminal ou s'il n'y a plus de coups à essayer
+         */
     //suppression ? utilité ?
         @Override
         public MCTSNode expand(MCTSNode node) {
@@ -126,8 +153,8 @@ public class RAVE extends MCTS {
     /***
      * Simulation avec trace : joue aléatoirement jusqu'à la fin et stocke
      * tous les coups joués dans lastSimMoves et lastSimColors.
-     * @param node
-     * @return
+     * @param node le nœud à partir duquel on simule
+     * @return la couleur du gagnant de la simulation
      */ 
     //renommmé simulate rave et override pour utiliser la fonction
     @Override

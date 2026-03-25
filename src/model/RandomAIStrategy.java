@@ -39,6 +39,9 @@ public class RandomAIStrategy implements MoveStrategy {
         // }
     }
 
+    /**
+     * Méthode pour décider de faire un swap ou pas. Ici, on choisit aléatoirement avec une probabilité de 50%.
+     */
     @Override
     public boolean decideSwap(Board board, int[] firstMove) {
         // plusiers stratégies possibles pour décider de faire un swap ou pas, ici on choisit aléatoirement

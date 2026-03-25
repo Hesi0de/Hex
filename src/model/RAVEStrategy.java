@@ -32,6 +32,7 @@ public class RAVEStrategy implements MoveStrategy {
         return rave.search(board, player);
     }
 
+    
     @Override
     public boolean decideSwap(Board board, int[] firstMove) {
         return false;

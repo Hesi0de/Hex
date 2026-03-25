@@ -76,6 +76,9 @@ import model.Board;
 import model.Color;
 import utils.UnionFind;
 
+/**
+ * Implémentation de l'interface PathFinder utilisant une structure de données Union-Find pour trouver un chemin gagnant dans un jeu de Hex.
+ */
 public class PathFinderUF implements PathFinder {
     
     public PathFinderUF(Board board) {
@@ -83,6 +86,9 @@ public class PathFinderUF implements PathFinder {
         // car on les gère directement de manière optimale dans la méthode en dessous.
     }
 
+    /**
+     * Vérifie si le joueur de la couleur donnée a un chemin gagnant sur le plateau en utilisant une structure de données Union-Find.
+     */
     @Override
     public boolean hasWinningPath(Board board, Color color) {
         int size = board.getSize();

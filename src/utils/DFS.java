@@ -5,8 +5,17 @@ import model.Color;
 
 import java.util.*;
 
+/**
+ * Classe  pour effectuer une recherche en profondeur (DFS) pour trouver un chemin gagnant pour un joueur donné.
+ */
 public class DFS {
 
+    /**
+     * Trouve un chemin gagnant pour le joueur de la couleur donnée sur le plateau en utilisant une recherche en profondeur (DFS).
+     * @param board Le plateau de jeu.
+     * @param color La couleur du joueur pour lequel trouver le chemin gagnant.
+     * @return Une liste de coordonnées représentant le chemin gagnant, ou null si aucun chemin gagnant n'est trouvé.
+     */
     public static List<int[]> findPath(Board board, Color color) {
         int size = board.getSize();
         boolean[][] visited = new boolean[size][size];
@@ -27,6 +36,17 @@ public class DFS {
         return null; 
     }
 
+
+    /**
+     * Effectue une recherche en profondeur (DFS) pour trouver un chemin gagnant à partir de la cellule donnée.
+     * @param board   Le plateau de jeu.
+     * @param color   La couleur du joueur pour lequel trouver le chemin gagnant.
+     * @param row     La ligne de la cellule de départ.
+     * @param col     La colonne de la cellule de départ.
+     * @param visited Un tableau pour suivre les cellules déjà visitées.
+     * @param path    Une liste pour stocker le chemin actuel.
+     * @return true si un chemin gagnant est trouvé, false sinon.
+     */
     private static boolean dfs(Board board, Color color, int row, int col, boolean[][] visited, List<int[]> path) {
         int size = board.getSize();
         if (row < 0 || row >= size || col < 0 || col >= size) return false;

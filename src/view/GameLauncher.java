@@ -3,7 +3,14 @@ package view;
 
 import model.*;
 
+/**
+ * Classe principale pour lancer le jeu de Hex. Elle initialise le plateau, les joueurs et gère la boucle de jeu.
+ */
 public class GameLauncher {
+
+    /**
+     * nettoye la console avant chaque tour de jeu.
+     */
     private static void clearGameConsole() {
         System.out.println("\033[H\033[2J");
         System.out.flush();

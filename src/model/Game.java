@@ -2,13 +2,36 @@ package model;
 
 import java.util.*;
 
+/**
+ * La classe Game représente une partie de Hex. Elle gère l'état du plateau, les joueurs, et les règles du jeu.
+ */
 public class Game {
 
+    /**
+     * Le plateau de jeu, une instance de la classe Board.
+     */
     private Board board;
+
+    /**
+     * Le joueur courant.
+     */
     private Player currentPlayer;
+
+    /**
+     * Joueur 1, genéralement associé à la couleur bleue.
+     */
     private final Player player1;
+    /**
+     * Joueur 2, genéralement associé à la couleur rouge.
+     */
     private final Player player2;
 
+    /**
+     * Constructeur de la classe Game. Il initialise le plateau de jeu et les joueurs.
+     * @param boardSize la taille du plateau de jeu (ex: 11 pour un plateau 11x11) 
+     * @param p1 le joueur 1, généralement associé à la couleur bleue 
+     * @param p2 le joueur 2, généralement associé à la couleur rouge
+     */
     public Game(int boardSize, Player p1, Player p2) {
         this.board = new Board(boardSize);
         this.player1 = p1;
@@ -16,13 +39,23 @@ public class Game {
         this.currentPlayer = p1;
     }
 
+
+    /**
+     * Retourne le joueur courant.
+     * @return le joueur courant
+     */
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
+    /**
+     * Réinitialise le joueur courant en fonction de la couleur donnée.
+     * @param color la couleur du joueur à réinitialiser.
+     */
     public void resetPlayer(Color color) {
         if (color == null) {
             currentPlayer = player1;
+            return;
         }
         if (!player1.getColor().equals(color)) {
             switchPlayer();
@@ -49,6 +82,10 @@ public class Game {
         currentPlayer = (currentPlayer == player1) ? player2 : player1;
     }
 
+    /**
+     * Vérifie si le coup joué par le joueur courant est valide.
+     * @return
+     */
     public boolean isValid() {
         return true;
 
@@ -87,6 +124,10 @@ public class Game {
          
     }*/
 
+    /**
+     * Retourne le plateau de jeu.
+     * @return le plateau de jeu
+     */
     public Board getBoard() {
         return board;
     }
