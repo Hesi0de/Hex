@@ -24,15 +24,28 @@ public class GameLauncher {
     public static void main(String[] args) {
         System.out.println("Welcome to HexGame");
 
-        Board board = new Board(11);
+        // Board board = new Board(11);
 
         Scanner scanner = new Scanner(System.in);
 
+        // Demande taille du plateau
+        System.out.print("Entrez la taille du plateau (ex: 11) : ");
+        int size = scanner.nextInt();
+
+        while (size < 3) {
+            System.out.print("Taille invalide. Entrez une taille >= 3 : ");
+            size = scanner.nextInt();
+        }
+
+        Board board = new Board(size);
+
+        Scanner scannerStrat = new Scanner(System.in);
+
         // Joueur Bleu
-        MoveStrategy stratBlue = chooseStrategy(scanner, Color.BLUE);
+        MoveStrategy stratBlue = chooseStrategy(scannerStrat, Color.BLUE);
 
         // Joueur Rouge
-        MoveStrategy stratRed = chooseStrategy(scanner, Color.RED);
+        MoveStrategy stratRed = chooseStrategy(scannerStrat, Color.RED);
 
         Player p1 = new Player("Blue Player", Color.BLUE, stratBlue);
         Player p2 = new Player("Red Player", Color.RED, stratRed);

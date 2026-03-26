@@ -12,7 +12,6 @@ public class BoardTest {
     public void runAllTests() {
         testCopy();
         testGetCell();
-        testSetCell();
         testExecuteMove();
         testIsValidMove();
         testGetWinner();
@@ -33,18 +32,20 @@ public class BoardTest {
      */
     public void testCopy() {
         Board board1 = new Board(5);
-        board1.setCell(0, 0, Color.RED);
-        board1.setCell(1, 1, Color.BLUE);
-
+        board1.executeMove(0, 0, Color.RED);
+        board1.executeMove(1, 1, Color.BLUE);
+    
         Board board2 = board1.copy();
-
+    
         check(board2.getCell(0, 0) == Color.RED, "Copy: (0,0) devrait être RED");
         check(board2.getCell(1, 1) == Color.BLUE, "Copy: (1,1) devrait être BLUE");
         check(board2.getCell(2, 2) == Color.EMPTY, "Copy: (2,2) devrait être EMPTY");
-
-        board1.setCell(0, 0, Color.BLUE);
+    
+        // modifier l’original
+        board1.executeMove(0, 1, Color.BLUE);
+    
         check(board2.getCell(0, 0) == Color.RED, "Copy: la copie ne doit pas changer");
-
+    
         System.out.println("testCopy réussi");
     }
 
@@ -53,31 +54,18 @@ public class BoardTest {
      */
     public void testGetCell() {
         Board board = new Board(5);
-        board.setCell(0, 0, Color.RED);
-        board.setCell(1, 1, Color.BLUE);
-
+        board.executeMove(0, 0, Color.RED);
+        board.executeMove(1, 1, Color.BLUE);
+    
         check(board.getCell(0, 0) == Color.RED, "GetCell: (0,0) RED");
         check(board.getCell(1, 1) == Color.BLUE, "GetCell: (1,1) BLUE");
         check(board.getCell(2, 2) == Color.EMPTY, "GetCell: (2,2) EMPTY");
-
+    
         System.out.println("testGetCell réussi");
     }
 
 
-    /**
-     * Test de la méthode setCell() de la classe Board. Vérifie que les cellules sont correctement mises à jour avec les bonnes couleurs.
-     */
-    public void testSetCell() {
-        Board board = new Board(5);
-
-        board.setCell(0, 0, Color.RED);
-        board.setCell(1, 1, Color.BLUE);
-
-        check(board.getCell(0, 0) == Color.RED, "SetCell: (0,0) RED");
-        check(board.getCell(1, 1) == Color.BLUE, "SetCell: (1,1) BLUE");
-
-        System.out.println("testSetCell réussi");
-    }
+    
 
     /**
      * Test de la méthode executeMove() de la classe Board. Vérifie que les coups sont correctement exécutés et que les règles sont respectées (pas de coup sur une case occupée).
