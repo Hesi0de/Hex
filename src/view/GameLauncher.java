@@ -1,6 +1,8 @@
 
 package view;
 
+import java.util.Scanner;
+
 import model.*;
 
 /**
@@ -16,24 +18,25 @@ public class GameLauncher {
         System.out.flush();
     }
 
+    /**
+     * Point d'entrée du programme. Initialise le jeu et gère la boucle de jeu.
+     */
     public static void main(String[] args) {
         System.out.println("Welcome to HexGame");
 
         Board board = new Board(11);
-        /*
-         * board.setCell(0, 0, Color.Colors.RED);
-         * board.setCell(0, 1, Color.Colors.BLUE);
-         * board.setCell(1, 0, Color.Colors.RED);
-         * board.setCell(1, 1, Color.Colors.EMPTY);
-         * board.setCell(7, 7, Color.Colors.BLUE);
-         */
-        //MoveStrategy RandomAIStrategy = new RandomAIStrategy();
 
-        MoveStrategy MctsStratB = new RAVEStrategy(3500, Color.BLUE);
-        MoveStrategy MctsStratR = new RAVEStrategy(8000, Color.RED);
+        Scanner scanner = new Scanner(System.in);
 
-        Player p1 = new Player("Blue Ai", Color.BLUE, MctsStratB);
-        Player p2 = new Player("Red Ai", Color.RED, MctsStratR);
+        // Joueur Bleu
+        MoveStrategy stratBlue = chooseStrategy(scanner, Color.BLUE);
+
+        // Joueur Rouge
+        MoveStrategy stratRed = chooseStrategy(scanner, Color.RED);
+
+        Player p1 = new Player("Blue Player", Color.BLUE, stratBlue);
+        Player p2 = new Player("Red Player", Color.RED, stratRed);
+
         Player currentPlayer = p1;
 
         Game game = new Game(board.getSize(), p1, p2);
@@ -94,5 +97,37 @@ public class GameLauncher {
 
         }
 
+    }
+
+    /**
+     * Affiche un menu pour choisir la stratégie d'un joueur .
+     * @param scanner pour lire l'entrée de l'utilisateur
+     * @param color la couleur du joueur pour lequel on choisit la stratégie
+     * @return la stratégie choisie par l'utilisateur
+     */
+    private static MoveStrategy chooseStrategy(Scanner scanner, Color color) {
+        System.out.println("Choisissez une stratégie pour " + color + " :");
+        System.out.println("1 - Random");
+        System.out.println("2 - MCTS");
+        System.out.println("3 - RAVE");
+
+        int choice = scanner.nextInt();
+
+        if (choice == 1) {
+            return new RandomAIStrategy();
+        }
+
+        System.out.print("Entrez le budget : ");
+        int budget = scanner.nextInt();
+
+        switch (choice) {
+            case 2:
+                return new MCTSStrategy(budget, color);
+            case 3:
+                return new RAVEStrategy(budget, color);
+            default:
+                System.out.println("Choix invalide, Random par défaut.");
+                return new RandomAIStrategy();
+        }
     }
 }
