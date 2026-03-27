@@ -29,11 +29,11 @@ public class GameLauncher {
         Scanner scanner = new Scanner(System.in);
 
         // Demande taille du plateau
-        System.out.print("Entrez la taille du plateau (ex: 11) : ");
+        System.out.println("Entrez la taille du plateau (ex: 11) : ");
         int size = scanner.nextInt();
 
         while (size < 3) {
-            System.out.print("Taille invalide. Entrez une taille >= 3 : ");
+            System.out.println("Taille invalide. Entrez une taille >= 3 : ");
             size = scanner.nextInt();
         }
 
@@ -130,7 +130,7 @@ public class GameLauncher {
             return new RandomAIStrategy();
         }
 
-        System.out.print("Entrez le budget : ");
+        System.out.println("Entrez le budget : ");
         int budget = scanner.nextInt();
 
         switch (choice) {
